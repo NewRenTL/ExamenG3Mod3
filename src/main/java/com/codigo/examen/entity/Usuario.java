@@ -3,8 +3,12 @@ package com.codigo.examen.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,8 +16,7 @@ import java.util.stream.Collectors;
 @Table(name = "usuario")
 @Getter
 @Setter
-public class Usuario {
-
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
@@ -49,5 +52,25 @@ public class Usuario {
     private Set<Rol> roles = new HashSet<>();
     public Set<String> getRolesNames() {
         return roles.stream().map(Rol::getNombreRol).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountnonexpire;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountnonlocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsnonexpired;
     }
 }

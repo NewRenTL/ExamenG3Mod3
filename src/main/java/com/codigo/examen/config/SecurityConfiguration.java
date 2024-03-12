@@ -1,7 +1,7 @@
 package com.codigo.examen.config;
 
-import com.codigo.mslogin.entity.Role;
-import com.codigo.mslogin.service.UsuarioService;
+import com.codigo.examen.repository.RolRepository;
+import com.codigo.examen.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,12 +18,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.management.relation.Role;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration  {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UsuarioService usuarioService;
+    private final RolRepository rolRepository;
 
 
     @Bean
@@ -31,8 +34,9 @@ public class SecurityConfiguration  {
     {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/authentication/**").
-                        permitAll().requestMatchers("api/v1/admin/**").hasAnyAuthority(Role.ADMIN.name())
-                        .requestMatchers("api/v1/user/**").hasAnyAuthority(Role.USER.name())
+                        permitAll().requestMatchers("api/v1/admin/**").
+                        hasAnyAuthority(rolRepository.findByNombreRol("ADMIN").get().getNombreRol())
+                        .requestMatchers("api/v1/user/**").hasAnyAuthority(rolRepository.findByNombreRol("USER").get().getNombreRol())
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

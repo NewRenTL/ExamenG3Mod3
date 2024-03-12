@@ -1,7 +1,6 @@
 package com.codigo.examen.config;
-
-import com.codigo.mslogin.service.JWTService;
-import com.codigo.mslogin.service.UsuarioService;
+import com.codigo.examen.service.JWTService;
+import com.codigo.examen.service.UsuarioService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

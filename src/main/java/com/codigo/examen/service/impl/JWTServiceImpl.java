@@ -1,6 +1,7 @@
 package com.codigo.examen.service.impl;
 
-import com.codigo.mslogin.service.JWTService;
+
+import com.codigo.examen.service.JWTService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -14,7 +15,6 @@ import java.util.Date;
 import java.util.function.Function;
 
 @Service
-
 public class JWTServiceImpl implements JWTService {
 
     public String generateToken(UserDetails userDetails)
