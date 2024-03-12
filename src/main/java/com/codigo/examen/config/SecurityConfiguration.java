@@ -34,9 +34,9 @@ public class SecurityConfiguration  {
     {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/authentication/**").
-                        permitAll().requestMatchers("api/v1/admin/**").
-                        hasAnyAuthority(rolRepository.findByNombreRol("ADMIN").get().getNombreRol())
-                        .requestMatchers("api/v1/user/**").hasAnyAuthority(rolRepository.findByNombreRol("USER").get().getNombreRol())
+                        permitAll()
+                        .requestMatchers("/ms-examen/v1/usuarios/token/**").
+                        hasAnyAuthority("ADMIN","USER")
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

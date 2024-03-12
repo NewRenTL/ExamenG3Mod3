@@ -17,16 +17,16 @@ public class UsuarioController {
         return usuarioService.createUsuario(usuario);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/token/{id}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
         return usuarioService.getUsuarioById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/token/{id}")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
         return usuarioService.updateUsuario(id,usuario);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/token/{id}")
     public ResponseEntity<?> deleteUsuario(@PathVariable Long id) {
         return usuarioService.deleteUsuario(id);
     }
